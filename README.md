@@ -1,5 +1,5 @@
 # Rusted brainfuck 🧠
-A simple rust interpreter for brainfuck written in <150 lines of rust.
+A simple rust interpreter for brainfuck written in <150 lines of Rust.
 
 Implements a version with 8-bit unsigned integers as cell values and 30,000 memory addresses.
 
