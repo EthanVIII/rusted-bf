@@ -3,11 +3,12 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
-// Declare fixed memory size for brainfuck memory array.
+// Valid characters for brainfuck commands as a constant.
+const BRAINFUCK_CHARS: [char; 8] = ['>', '<', '+', '-', '.', ',' ,'[',']'];
+// Valid memory address size for brainfuck.
 const MEMORY_SIZE: usize = 30_000;
 
 fn main() {
-
     ////////////////////////////// READ FILE /////////////////////////////////
 
     let args: Vec<String> = env::args().collect();
