@@ -1,2 +1,2 @@
-# rusted-bf
-A simple rust interpreter for brainfuck files. 
+# Rusted brainfuck
+A simple rust interpreter for brainfuck.
