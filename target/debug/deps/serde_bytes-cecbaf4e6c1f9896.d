@@ -1,0 +1,11 @@
+/home/ethan/Documents/Programming/rusted-bf/target/debug/deps/serde_bytes-cecbaf4e6c1f9896.rmeta: /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/lib.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytes.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/de.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/ser.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytebuf.rs
+
+/home/ethan/Documents/Programming/rusted-bf/target/debug/deps/libserde_bytes-cecbaf4e6c1f9896.rlib: /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/lib.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytes.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/de.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/ser.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytebuf.rs
+
+/home/ethan/Documents/Programming/rusted-bf/target/debug/deps/serde_bytes-cecbaf4e6c1f9896.d: /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/lib.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytes.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/de.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/ser.rs /home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytebuf.rs
+
+/home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/lib.rs:
+/home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytes.rs:
+/home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/de.rs:
+/home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/ser.rs:
+/home/ethan/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde_bytes-0.11.12/src/bytebuf.rs:
