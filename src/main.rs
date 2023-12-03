@@ -1,12 +1,13 @@
-use std::env;
+use std::{env, fs, io};
 use std::fs::File;
-use std::io::Read;
+use std::io::{Read, Write};
 use std::path::Path;
+use serde_bytes::Bytes;
 
 // Valid characters for brainfuck commands as a constant.
 const BRAINFUCK_CHARS: [char; 8] = ['>', '<', '+', '-', '.', ',' ,'[',']'];
 // Valid memory address size for brainfuck.
-const MEMORY_SIZE: usize = 30_000;
+const MAX_MEMORY_INDEX: usize = 30_000;
 
 fn main() {
     ////////////////////////////// READ FILE /////////////////////////////////
@@ -38,9 +39,11 @@ fn main() {
 
     /////////////////////////////// SETUP ENV  //////////////////////////////
 
-    let mut memory: [u8; MEMORY_SIZE] = [0; MEMORY_SIZE];
+    let mut memory: Vec<u8> = vec![0; MAX_MEMORY_INDEX];
     let mut pointer: usize = 0;
     let mut read_head: usize = 0;
+    let mut changing_file_number: u128 = 0;
+    let mut current_file_number: u128 = 0;
     let command_list: Vec<char> = commands.chars().collect();
 
     //////////////////////////////// INTERPRET //////////////////////////////
@@ -52,9 +55,31 @@ fn main() {
         command = command_list[read_head];
         match command {
             // '>' moves the read head/cell addressed right by one.
-            '>' => { pointer = if pointer + 1 == MEMORY_SIZE { 0 } else { pointer + 1 }; }
+            // If this goes past the max memory, then it will change the file.
+            '>' => {
+                pointer = if pointer == MAX_MEMORY_INDEX {
+                    if current_file_number == u128::MAX {
+                        changing_file_number = 0;
+                        0
+                    } else {
+                        changing_file_number += 1;
+                        0
+                    }
+                } else { pointer + 1 };
+            }
             // '<' moves the read head/cell addressed left by one.
-            '<' => { pointer = if pointer - 1 == usize::MAX { MEMORY_SIZE } else { pointer - 1 }; }
+            // If this goes under the max memory, then it will change the file.
+            '<' => {
+                pointer = if pointer == 0 {
+                    if current_file_number == 0 {
+                        changing_file_number = u128::MAX;
+                        MAX_MEMORY_INDEX
+                    } else {
+                        changing_file_number -= 1;
+                        MAX_MEMORY_INDEX
+                    }
+                } else { pointer - 1 };
+            }
             // '+' increments the value in the cell addressed.
             '+' => { memory[pointer] += 1; }
             // '-' decrements the value in the cell addressed.
@@ -93,9 +118,44 @@ fn main() {
             }
             _ => { panic!("[ERROR] Unexpected command \"{}\" in instructions.",command); }
         }
+        // TRUE indicates that a memory block change is needed.
+        if changing_file_number != current_file_number {
+            // Serialise the current mem and write to mem/ folder as unique mem block.
+            let writing_bytes: &Bytes = Bytes::new(&memory);
+            let writing_file_name: String = current_file_number.to_string() + "mem.txt";
+            let mut writing_file: File = File::create("mem/".to_owned() + &*writing_file_name)
+                .expect("Unable to create mem file");
+            writing_file.write_all(writing_bytes).expect("Unable to write to mem file");
+
+            // Deserialise the new mem block if available. If not created create the new block.
+            let reading_file_name: String = changing_file_number.to_string() + "mem.txt";
+            match File::open(reading_file_name) {
+                Ok(mut reading_file) => {
+                    reading_file.read_to_end(&mut memory)
+                        .expect("Unable to read mem block");
+                }
+                Err(_) => {
+                    // File does not exist. Create a new one in memory.
+                    memory = vec![0; MAX_MEMORY_INDEX];
+                }
+            }
+        }
         read_head += 1;
+        current_file_number = changing_file_number;
     }
 
+    //////////////////////////////// CLEANUP ENV //////////////////////////////
+
+    // Clean up all memory blocks in the mem directory.
+    remove_dir_contents("mem/")
+        .expect("Unable to clean up memory blocks");
+}
+
+// Removes all contents in a directory.
+fn remove_dir_contents<P: AsRef<Path>>(path: P) -> io::Result<()> {
+    for entry in fs::read_dir(path)? {
+        fs::remove_file(entry?.path())?;
+    } Ok(())
 }
 
 // Compute the positions of the matching bracket for each bracket.
@@ -129,5 +189,3 @@ fn loop_closures(commands: &Vec<char>) -> Vec<Option<usize>> {
     );
     return closure
 }
-
-
